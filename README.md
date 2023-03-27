@@ -20,8 +20,13 @@ El proceso comienza definiendo un horario de actualización de los datos para qu
 ## <a href="https://github.com/hikikae/Api-Data-Pipeline-Integration/tree/main/details_review_data"> Primera Cloud Storage </a>
 El flujo de trabajo de la primer Cloud Function es obtener y almacernar la información relevante de los restaurantes. Para ello, se obtienen primero las coordenadas de ciertas ciudades dentro de los cinco estados conmayor densidad poblacional de los Estados Unidos, mediante Geocoding API. Posteriormente, se utiliza Places API para extraer los datos de restaurantes.
 
-<p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/details_review_data_function.png"></p><br>
+<p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/details_review_data.gif"></p><br>
 
 Cloud Function es activada mediante una solicitud de HTTP y los datos son almacenados en un bucket de Cloud Storage que funge como Data Lake. 
 
+<p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/details_review_data_trigger.png"></p><br>
+
 Es importante mencionar que tanto la Geocoding API como la Places API son proporcionadas por Google y requieren credenciales de API válidas para su correcto funcionamiento.
+
+## Cloud Storage 
+
