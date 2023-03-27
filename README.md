@@ -43,7 +43,9 @@ Una vez que se han llevado a cabo los procesos de transformación de los datos, 
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/datawarehouse.png"></p> <br>
 
 ## Slack API
-La integración de slack 
+La finalidad de la integración con Slack es enviar una notificación acerca del proceso de carga de datos, con el propósito de evitar la necesidad de estar monitorizando constantemente la plataforma de GCP.
+<br>
+<p align=center><img width="50%" src= "https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/slack_api.gif"></p><br>
 
 ##  Tecnologias Usadas
 - Google Cloud Plataform (GCP)
