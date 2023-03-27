@@ -10,6 +10,7 @@ Uno de los principales objetivos para este proyecto es el enriquecimiento de los
 - [Cloud Storage (Data Lake)](#Storage)
 - [Segunda Cloud Function](#Segunda)
 - [Cloud Storage (Data Warehouse)](#Warehouse)
+- [Slack API (Notificación)](#Slack)
 
 ### Cloud Scheduler
 El proceso comienza definiendo un horario de actualización de los datos para que la carga sea de forma automática, para ello se utilizó Cloud Scheduler que llama a un extremo HTTP que se ejecuta en Cloud Function.
@@ -40,6 +41,9 @@ En esta Cloud Function se llevó a cabo la transfromación, limpieza y carga de 
 Una vez que se han llevado a cabo los procesos de transformación de los datos, éstos se ponen a disposición en un bucket que funge como Datawarehouse. De esta forma, tanto el departamento de Data Analytics como el de Data Science pueden acceder a ellos y utilizarlos para sus respectivos análisis y proyectos. Este enfoque facilita la colaboración y el intercambio de información valiosa entre los equipos y contribuye a la toma de decisiones informadas basadas en datos precisos y actualizados.
 <br>
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/datawarehouse.png"></p> <br>
+
+## Slack API
+La integración de slack 
 
 ##  Tecnologias Usadas
 - Google Cloud Plataform (GCP)
