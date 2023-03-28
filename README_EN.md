@@ -45,7 +45,8 @@ Once the data transformation processes are complete, the data is made available 
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/datawarehouse.png"></p> <br>
 
 ## Slack API
-The Slack integration is used to send a notification about the data upload process to avoid the need to constantly monitor the GCP platform.
+The Slack integration is used to send a notification about the data upload process to avoid the need to constantly monitor the GCP platform. The URL of the webhook to execute the notification is unique and specific to each project.
+
 <br>
 <p align=center><img width="50%" src= "https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/slack_api.gif"></p><br>
 
