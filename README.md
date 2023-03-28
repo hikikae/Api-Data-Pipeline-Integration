@@ -36,6 +36,8 @@ Los datos se recolectan en su forma original, sin procesamiento previo, en un fo
 
 ### <a href="https://github.com/hikikae/Api-Data-Pipeline-Integration/tree/main/details_to_dw_function"> Segunda Cloud Function </a>
 En esta Cloud Function se llevó a cabo la transformación, limpieza y carga de los datos originales mediante la biblioteca de Pandas. Una vez completado el proceso, los datos se envían a un Bucket de Cloud Storage y se emite una notificación en Slack para informar sobre la finalización del mismo.
+<br>
+<p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/ETL_function.gif"></p> <br>
 
 ### Cloud Storage 
 Una vez que se han llevado a cabo los procesos de transformación de los datos, éstos se ponen a disposición en un bucket que funge como Datawarehouse. De esta forma, tanto el departamento de Data Analytics como el de Data Science pueden acceder a ellos y utilizarlos para sus respectivos análisis y proyectos. Este enfoque facilita la colaboración y el intercambio de información valiosa entre los equipos y contribuye a la toma de decisiones informadas basadas en datos precisos y actualizados.
@@ -44,6 +46,7 @@ Una vez que se han llevado a cabo los procesos de transformación de los datos, 
 
 ## Slack API
 La finalidad de la integración con Slack es enviar una notificación acerca del proceso de carga de datos, con el propósito de evitar la necesidad de estar monitorizando constantemente la plataforma de GCP.
+La URL del webhook para ejecutar la notificación es única y específica para cada proyecto.
 <br>
 <p align=center><img width="50%" src= "https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/slack_api.gif"></p><br>
 
