@@ -15,7 +15,7 @@ Uno de los principales objetivos para este proyecto es el enriquecimiento de los
 ### Cloud Scheduler
 El proceso comienza definiendo un horario de actualización de los datos para que la carga sea de forma automática, para ello se utilizó Cloud Scheduler, este llama a un endpoint HTTP que ejecuta al Cloud Function que carga los datos de las API's.La URL se encuentra en la sección de activadores.
 
-<p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/Cloud_Scheduler.gif"></p><br>
+<p align=center><img width="70%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/Cloud_Scheduler.gif"></p><br>
 
 
 ### <a href="https://github.com/hikikae/Api-Data-Pipeline-Integration/tree/main/details_review_data"> Primer Cloud Function </a>
