@@ -17,7 +17,6 @@ Cloud Scheduler is used to define a data update schedule for automatic loading o
 
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/Cloud_Scheduler.gif"></p><br>
 
-
 ### <a href="https://github.com/hikikae/Api-Data-Pipeline-Integration/tree/main/details_review_data"> First Cloud Function </a>
 The first Cloud Function obtains and stores relevant restaurant information. It uses the Geocoding API to obtain the coordinates of certain cities in the five most densely populated states in the United States. Then, the Places API extracts the restaurant data. 
 <br>
@@ -37,7 +36,8 @@ Data is collected in a JSON format in its original form, without prior processin
 
 ### <a href="https://github.com/hikikae/Api-Data-Pipeline-Integration/tree/main/details_to_dw_function"> Second Cloud Function </a>
 The second Cloud Function carries out the transformation, cleaning, and loading of the original data using the Pandas library. Once the process is complete, the data is sent to a Cloud Storage Bucket, and a notification is issued in Slack to inform about the completion of the process.
-
+<br>
+<p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/ETL_function.gif"></p> <br>
 
 ### Cloud Storage 
 Once the data transformation processes are complete, the data is made available in a bucket that serves as a Data Warehouse. This approach facilitates collaboration and the sharing of valuable information between teams and contributes to making informed decisions based on accurate and up-to-date data.
