@@ -23,14 +23,14 @@ El flujo de trabajo de la primer Cloud Function es obtener y almacenar la inform
 
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/details_review_data.gif"></p><br>
 
-Cloud Function es activada mediante una solicitud de HTTP y los datos son almacenados en un bucket de Cloud Storage que funge como Data Lake. 
+Cloud Function es activada mediante una solicitud de HTTP. 
 
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/details_review_data_trigger.png"></p><br>
 
 Es importante mencionar que tanto la Geocoding API como la Places API son proporcionadas por Google y requieren credenciales de API válidas para su correcto funcionamiento.
 
 ### Cloud Storage 
-Los datos se recolectan en su forma original, sin procesamiento previo, en un formato JSON. Estos datos se almacenan en un Bucket que cumple la función de un Data Lake dentro del Cloud Storage. 
+Los datos se recolectan en su forma original, sin procesamiento previo, en un formato JSON y son almacenados junto con la data estática en el bucket de Cloud Storage, es decir el Data Lake.  
 <br>
 <p align=center><img width="50%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/images/datalake.png"></p> <br>
 
