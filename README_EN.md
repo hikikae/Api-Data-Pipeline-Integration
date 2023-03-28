@@ -2,7 +2,7 @@
 One of the main objectives of this project is the enrichment of static data from Google Maps and Yelp, through API.
 <br>
 <br>
-<p align=center><img width="80%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/_src/ApiData-Pipeline-Integration.png"></p><br>
+<p align=center><img width="80%" src="https://github.com/hikikae/Api-Data-Pipeline-Integration/blob/main/_src/Api-Data-Pipeline-Integration.png"></p><br>
 
 ## ✨ Process Elements
 - [Cloud Scheduler](#Scheduler)
