@@ -13,7 +13,7 @@ from urllib.request import Request
 
 # funcion para enviar un mensaje en el canal de slack mencionando que terminó
 def enviar_mensaje_slack(request):
-    webhook_url = 'https://hooks.slack.com/services/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'
+    webhook_url = 'https://hooks.slack.com/services/*terminacion unica, revisa el link en la api de slack'
     mensaje = 'Los datos de details api se ha terminado'
     headers = {'Content-type': 'application/json'}
     payload = {'text': mensaje}
