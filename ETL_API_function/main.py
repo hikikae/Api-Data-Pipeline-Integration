@@ -11,17 +11,17 @@ import requests
 from urllib.request import Request
 
 
-# funcion para enviar un mensaje en el canal de slack mencionando que terminó
+# function to send a message in the slack 
 def enviar_mensaje_slack(request):
-    webhook_url = 'https://hooks.slack.com/services/*terminacion unica, revisa el link en la api de slack'
-    mensaje = 'Los datos de details api se ha terminado'
+    webhook_url = 'https://hooks.slack.com/services/custom-link-in-slack-api'
+    mensaje = 'Los datos de las apis se han cargado con éxito'
     headers = {'Content-type': 'application/json'}
     payload = {'text': mensaje}
     response = requests.post(webhook_url, headers=headers, data=json.dumps(payload))
     print('Mensaje enviado:', response.status_code, response.text)
     return 'Mensaje enviado'
 
-# Función para clasificar los comentarios
+#  Function to classify comments
 def classify_comment2(comment):
     if comment is None:
         return 'No message'
@@ -36,23 +36,23 @@ def classify_comment2(comment):
 
 
 def procesar_datos_json(event, context, request):
-    # Lee el archivo JSON y guardarlo en un DataFrame
+    # Open the JSON file and load it into a DataFrame
     file_name = event['name']
     print(file_name)
     df = pd.read_json(f"gs://{event['bucket']}/{file_name}")
     
-    # Cambia el nombre de la columna 'rating' a 'rating_avg'
+    # Rename the column 'rating' to 'rating_avg'.
     df= df.rename(columns={'rating':'rating_avg'})
     print(df.head(2))
     
-    # Dropea las columnas que no tienen rating 
+    # Drops columns that have no rating 
     df = df.drop(df.loc[df['rating_avg'] == 'N/A'].index)
     
-    # Agrega la columna dependiendo del estado
+    # Adds column depending on the state
     filename = os.path.splitext(os.path.basename(event['name']))[0]
     print(filename)
     
-    # Mapea el nombre del archivo a un estado
+    # Maps the file name to a state
     state_mapping = {
         'California': 'CA',
         'Texas': 'TX',
@@ -61,51 +61,51 @@ def procesar_datos_json(event, context, request):
         'NuevaYork': 'NY'
     }
 
-     # Agrega la columna "state" al DataFrame
+     # Add "state" column to DataFrame
     df['state'] = state_mapping.get(filename)
     
-    # Desanida la columna 'reviews'
+    # Unnest the 'reviews' column
     df_expanded = df.explode('reviews').reset_index(drop=True)
 
-    # Filtra solo los elementos de la columna 'reviews' que son diccionarios
+    # Filter out only the items in the 'reviews' column that are dictionaries
     df_expanded = df_expanded[df_expanded['reviews'].apply(lambda x: isinstance(x, dict))]
 
-    # Normaliza la columna 'reviews'
+    # Normalize the 'reviews' column
     reviews_df = pd.json_normalize(df_expanded['reviews'])
     reviews_df = reviews_df.add_prefix('reviews.')
 
-    # Une el DataFrame original con el DataFrame de reviews normalizado
+    # Join the original DataFrame with the normalized reviews DataFrame.
     df_data = pd.concat([df_expanded.drop('reviews', axis=1), reviews_df], axis=1)
 
-    # Extra el user_id de la columna de reviews.author_url
+    # Extract the user_id from the reviews.author_url column.
     new=df_data['reviews.author_url'].str.split(pat='/', n=6,expand=True)
     df_data['user_id']=new[5]
     df_data['user_id'] = df_data['user_id'].astype(str)
 
-    # Añade una columna con el sentimiento 
+    # Add a sentiment column 
     df_data['feeling'] = df_data['reviews.text'].apply(lambda x: classify_comment2(x) if pd.notnull(x) else 'No message')
     
-    # Agrega las columnas para que tenga el mismo formato que los demas datos de las plataformas
+    # Add the columns to have the same format as the other platform data.
     df_data['main_category']='food services'
     df_data['num_of_reviews']= 0
     df_data['platform']='detailsApi'
     df_data['resp']= "No response"
 
-    # Renombra algunas columnas
+    # Rename some columns
     df_data = df_data.rename(columns={'reviews.rating': 'rating','reviews.time':'date','reviews.text': 'opinion', 'place_id':'business_id','name':'local_name'})
     df_data = df_data[['user_id','business_id','local_name','latitude','longitude','num_of_reviews','state','main_category','date','rating','resp','opinion','feeling','platform']]
    
-    # Elimina los emojis y caracteres extraños de la columna opinion 
+    # Removes emojis and strange characters from the opinion column 
     df_data['opinion'] = df_data['opinion'].str.replace('"', '')
     df_data['opinion'] = df_data['opinion'].apply(lambda x: x.encode('unicode-escape').decode('utf-8'))
     
-    # Elimina duplicados
+    # Removes duplicates
     df_data.drop_duplicates(inplace=True)
 
-    # Envia los datos al data warehouse en formato csv
+    # Send data to the data warehouse in csv format
     df_data.to_csv('gs://' + 'datasets-pg' + '/' + 'Details-Api' + '/' + filename + '.csv',index=False)
     
-    # Envia el mensaje de termino al grupo de slack 
+    # Send completion message to slack group 
     enviar_mensaje_slack()
 
     return 'done'

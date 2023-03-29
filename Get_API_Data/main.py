@@ -6,7 +6,7 @@ import json
 import random 
 import pandas as pd
 
-#se agrega un random para cambiar un poco la longitud y latitud y asi obtener resultados distintos
+# a random function is added to change a little the longitude and latitude to obtain different results
 def get_random_offset():
     return random.uniform(-0.01, 0.01)
 
@@ -21,36 +21,36 @@ def search_restaurants(request):
     api_key = API_KEY
     
     for state, cities in locations.items():
-        random.shuffle(cities)  # reordenamos las ciudades
+        random.shuffle(cities)  #  rearrange the cities
         restaurant_data = []
         for city in cities:
-            # se obtienen las coordenadas de las ciudades
+            # the city coordinates are obtained
             geocoding_url = f'https://maps.googleapis.com/maps/api/geocode/json?address={city},{state}&key={api_key}'
             geocoding_response = requests.get(geocoding_url)
             geocoding_result = geocoding_response.json()['results'][0]
             location_lat = geocoding_result['geometry']['location']['lat']+ get_random_offset()
             location_lng = geocoding_result['geometry']['location']['lng']+ get_random_offset()
 
-            # parametros de busqueda
+            # search parameters
             query = 'restaurant'
             radius = 50000
             fields = 'name,rating,formatted_address,geometry,reviews'
 
-            # buscamos con las coordenadas los restaurants en 50km 
+            # we search with the coordinates for restaurants within 50km 
             url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location_lat},{location_lng}&radius={radius}&type={query}&key={api_key}'
 
-            # hacemos el request y obtenemos los resultados
+            # we make the request and get the results
             response = requests.get(url)
             results = response.json()['results']
 
-            # para cada resultado se obtienen los detalles que se necesitan
+            # for each result you get the details you need
             for result in results:
                 place_id = result['place_id']
                 details_url = f'https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields={fields}&key={api_key}'
                 details_response = requests.get(details_url)
                 details = details_response.json()['result']
 
-                # Obteniendo los datos necesarios y agregandolos al diccionario
+                # Obtaining the required data and adding them to the dictionary
                 restaurant = {
                     'name': details['name'],
                     'rating': details.get('rating', 'N/A'),
@@ -62,13 +62,13 @@ def search_restaurants(request):
                 }
                 restaurant_data.append(restaurant)
 
-        # se aplana el json 
+        # json is flattened 
         df = pd.json_normalize(restaurant_data)
 
-        # de data lo convertimos a un diccionario
+        # from data we converted it to a dictionary
         restaurant_data_flat = df.to_dict('records') 
 
-        # Guardar el archivo JSON
+        # Saving JSON file
         storage_client = storage.Client()
         bucket_name = 'extra_sources'
         file_name = f"{state}.json"
@@ -76,5 +76,4 @@ def search_restaurants(request):
         blob = bucket.blob(f"Details-Api/{file_name}")
         blob.upload_from_string(json.dumps(restaurant_data_flat, indent=1, separators=(',', ': ')))
 
-    # regresamos un mensaje 
-    return 'Terminado'
+    return 'Done'
